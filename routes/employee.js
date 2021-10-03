@@ -11,7 +11,7 @@ const router = express.Router()
 
 router.get('/:id', async function (req, res) {
   try {
-    const sqlQuery = 'SELECT  employee.id, employee.profile, employee.email, employee.adress, employee.registered, employee.isActive, employee.team, employee.created_at, employee.updated_at FROM employee INNER JOIN team ON employee.team = team.id WHERE employee.id =?'
+    const sqlQuery = 'SELECT  employee.id, employee.profile, employee.email, employee.adress, employee.registered, employee.isActive, GROUP_CONCAT(JSON_OBJECT("id", team.id, "name", team.name, "description", team.description, "created_at", team.created_at, "updated_at", team.updated_at)) AS team, employee.created_at, employee.updated_at  FROM employee  LEFT JOIN team ON employee.team = team.id WHERE employee.id =?'
     const rows = await pool.query(sqlQuery, req.params.id)
     res.status(200).json(rows)
   } catch (error) {
