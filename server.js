@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
   response.status(200).json({ name: 'jalel' })
 })
 
-const employeeRouter = require('./routes/emplyee')
+const employeeRouter = require('./routes/employee')
 app.use('/employee', employeeRouter)
 
 const teamRouter = require('./routes/team')
